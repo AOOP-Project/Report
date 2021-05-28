@@ -7,19 +7,19 @@ The component system is the main way for someone using this framework to attach 
 [Example SimpleMove]
 \\ \\
 \textbf{Serialization} \\%[Serialization]
-Serialization is one way of saving class-based data persistently.  It enables tools such as the map editor to edit a grid and then save that grid which can be loaded in by the GameInstance. The serialization target in this case is the Grid class, all objects connected to the grid that are not transient will be serialized(this is done recursively until the entire “network”  of objects are serialized). Since the Grid is the serialization target it  implements ways of serializing and deserializing. 
+Serialization is one way of saving class-based data persistently. It enables tools such as the map editor to edit a grid and then save that grid which can be loaded in by the GameInstance. The serialization target in this case is the Grid class, all objects connected to the grid that are not transient will be serialized. This is done recursively until the entire “network” of objects are serialized. Since the Grid is the serialization target it implements ways of serializing and deserializing. 
 \\ \\
-This might sound like a simple feat but the 15+ hours of us working on this feature to get it to work properly says otherwise. The main reason for this is the fact that the grid contains not only GameObjects but also GameComponents within those GameObjects which can vary greatly. One default component that was particularly troublesome was the Sprite which houses a BufferedImage that is not serializable. Though the reason why it is not serializable is most likely a good one. One solution to this was to be able to re-assign BufferedImages when loading in a grid. 
+This might sound like a simple feature but the 15+ hours of us working on this feature to get it to work properly says otherwise. The main reason for this is the fact that the grid contains not only GameObjects but also GameComponents within those GameObjects which can vary greatly. One default component that was particularly troublesome was the Sprite which houses a BufferedImage that is not serializable. Though the reason why it is not serializable is most likely a good one. One solution to this was to be able to re-assign BufferedImages when loading in a grid. 
 \\ \\
-The method we used to solve this was to map a String reference to each BufferedImage at the time of asset loading. When loading a new Grid, remapping all buffered images requires taking the reference which is serializable and fetching the image from the GameInstance. if there are no assets loaded in the GameInstance it is a simple matter of loading the directory containing the image assets. (FOOTNOTE These assets must be the same as when the Grid was first serialized )
+The method we used to solve this was to map a String reference to each BufferedImage at the time of asset loading. When loading a new Grid, remapping all buffered images requires taking the reference which is serializable and fetching the image from the GameInstance. If there are no assets loaded in the GameInstance it is a simply matter of loading the directory containing the image assets. (FOOTNOTE These assets must be the same as when the Grid was first serialized)
 \\ \\
-ObjectPrefabs are also serializable, this allows objects to be reconstructed after deserialization. One case where this would be useful is if there exists a spawner GameObject needs to be reinstated for any reason. 
+ObjectPrefabs are also serializable, this allows objects to be reconstructed after deserialization. One case where this would be useful is if there exists a spawner GameObject that needs to be reinstated for some reason. 
 \\ \\
 \textbf{Render system} \\%[Render system]
-From a usability standpoint the rendering of the grid is a clear time saver; it only takes a couple lines of code to instantiate and start the renderer. After that point it will run on a separate thread refreshing the view at fixed intervals updating as the grid does. This is the current code for the painting of the grid panel:
+From a usability standpoint the rendering of the grid is a clear time saver. It only takes a couple lines of code to instantiate and start the renderer. After that point it will run on a separate thread refreshing the view at fixed intervals updating as the grid does. This is the current code for the painting of the grid panel:
 	[Code for grid Panel PaintComponent]
 Previously the stream painting of each Sprite was done in parallel, though this caused some jittering in the final view when running on Ryzen and ThreadRipper CPUs so it was omitted.
-
+\\
 The original idea with the render system was to delegate most processing to the GPU via OpenCL. Trying to implement this rendered most of the previous code unusable. Some half-cocked C-looking code reading like an error message later (example: void JI\_MatrixMul\_kernel\_basic(int dim, float[][] A, float[][] B){})  forced the realization that it would not be feasible with our current skill set. Furthermore even the most skillfully written CUDA code would not impactfully help render a 512*512 pixel grid.
 \\ \\
 \textbf{Prefab system} \\%[Prefab system]
@@ -38,7 +38,9 @@ The map-editor was an early product that we chose to implement to maintain a hig
 \textbf{UI and event management} \\%[UI and event management]
 \textbf{Threading} \\%[Threading]
 Threads are good because they’re like strings within java. So creating new threads would be only to create new strings within the code.
+\\
 \textbf{Event system} \\%[Event system]
+\\
 \textbf{Sound system} \\%*[Sound system]
 \\ \\
 Like all projects this one accrued a significant amount of technical debt. This was mainly due to falling into many of the common AntiPatterns being to admit these might help understanding some of the less understandable design choices. The most common and prevalent of these was Band Aid/The Quick Fix. 
