@@ -66,88 +66,67 @@ serialization/deserialization issues and visual jitter in the Grid
 JPanel. Due to some underlying lack of understanding of these systems
 the focus was mainly on these. After the core components had been added
 and got working the focus shifted over to Unit testing.
-
+\\ \\
 The first approach to unit testing was to test the three main systems
 ***LINK*** internally by writing unit tests that assumed direct access
 to the internals of these systems. These got quite exhaustive and mostly
 caught non-issues since a user of the framework would not interface with
 these classes directly.
-
+\\ \\
 The final approach to unit testing was to consolidate the
 above-mentioned tests through the proper interface (the GameInstance).
 This shift was necessary to find the right types of bugs. By testing
 this mediated interface it also helped get a better understanding of how
 most issues in the framework arise.
-
+\\ \\
 Can be found in:
 
-\emph{\textasciitilde{}projectRoot} \emph{/Testing/JUnit/ }
+\emph{\textasciitilde{}projectRoot/Testing/JUnit/GameInstanceTest.java}
+\\ \\
+\emph{assertTest()}\\
+\hspace*{10mm} Tests that assertions are enabled (to not invalidate all results to come)
+\\ \\
+\emph{setUpdateTimer()}\\
+\hspace*{10mm} Test that objects and components get updated at given interval:
 
-\begin{quote}
-\emph{GameInstanceTest.java}
-\end{quote}
+\emph{setAllowedTextureFileExtension()}\\
+\emph{loadTextureAssets()}\\
+\emph{getTextures()}\\
+\emph{getTexture()}\\
+\hspace*{10mm} Tests asset loading \\
 
-assertTest()
+\emph{setMainGrid()}\\
+\hspace*{10mm} Tests if the setting of a new will cause any unexpected errors (different sizes and such)
 
-Tests that assertions are enabled (so not invalidate all results to
-come)
-
-Test that objects and components get updated att given interval:
-
-setUpdateTimer()
-
-Testing of asset loading:
-
-setAllowedTextureFileExtension()\\
-loadTextureAssets()
-
-getTextures()\\
-getTexture()
-
-Test if the setting of a new will cause any unexpected errors (different
-sizes and such)\\
-setMainGrid()
-
-Test that GameObjects are accessible through the GameInstance:\\
-addGameObject()\\
+addGameObject()
 getGameObject()
-
 getGameObjects()
+Tests that GameObjects are accessible through the GameInstance
 
-Test of Serialization and Deserialization\\
 loadGridFromSave()
-
-addSavedGridPath()\\
+addSavedGridPath()
 switchGrid()
-
 reloadGrid()
-
+Testing Serialization and Deserialization
+refreshSpritesInRenderer()
+addSprite()
 Testing of the Renderer
 
-refreshSpritesInRenderer()\\
-addSprite()
-
-Testing of single threaded performance with UI\\
-refreshMappedUserInput()\\
+refreshMappedUserInput()
 removeAllMappedUserInputFromFrame()
+Testing of single threaded performance with UI 
 
-Testing of event system\\
+
 removeEvent()
-
 addEvent()
-
 checkEvents()
-
 startPeriodicEventChecking()
+Testing of event system
 
-Tools
-
-compareImages\\
+compareImages
 getTestObject
-
 TestEvent
-
-TestComponent\\
+TestComponent
 TestControllableComponent
 
 \href{https://gyazo.com/3d19cdd104651befcf45e46d5c71fe95}{\emph{https://gyazo.com/3d19cdd104651befcf45e46d5c71fe95}}
@@ -155,7 +134,9 @@ TestControllableComponent
 https://gyazo.com/2e75c807a75a2781be6ff6236e564477
 
 Timing of tests\\
-\includegraphics[width=6.26772in,height=5.68056in]{media/image1.png}
+\begin{center}
+\includegraphics[scale=0.5]{TestRes}
+\end{center}
 
 Functional and integration testing was done on the framework but mainly
 during the implementation of the two games Sokoban and Sound Board. This
@@ -201,7 +182,9 @@ ConcurrentAccessExceptions:
 
 https://gyazo.com/0c153fbf1078ab255c078941bc941995
 
-\includegraphics[width=6.26772in,height=2.11111in]{media/image2.png}
+\begin{center}
+\includegraphics[scale=0.32]{Thread}
+\end{center}
 
 Through these reports and github issues displaying similar issues we
 managed to find most issues of this sort.

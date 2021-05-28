@@ -7,6 +7,7 @@
 \usepackage{amsmath}
 \usepackage{hyperref}
 \usepackage{graphicx}
+\graphicspath{ {./images/} }
 \usepackage{float}
 \usepackage[a4paper, total={6.5in, 8in}]{geometry}
 \setlength{\topmargin}{-1cm}
@@ -37,14 +38,18 @@
 \begin{document}
 \maketitle
 \tableofcontents
+
 \newpage
 \section{Introduction}
 \subfile{sections/introduction.tex}
 
 \newpage
 \section{Design}
+\subfile{sections/design.tex}
+
 \newpage
-\subfile{sections/testing.tex}
+\section{Testing}
+\subfile{sections/Testing_1.tex}
 
 \newpage
 \section{Features and Problems}
@@ -52,6 +57,7 @@
 
 \newpage
 \section{Results}
+\subfile{sections/results.tex}
 
 \newpage
 \section{Version Control System}
@@ -59,5 +65,6 @@
 
 \newpage
 \section{Sources}
+\subfile{sections/sources.tex}
 
 \end{document}
