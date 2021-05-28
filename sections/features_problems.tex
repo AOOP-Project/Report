@@ -20,15 +20,17 @@ From a usability standpoint the rendering of the grid is a clear time saver. It 
 	[Code for grid Panel PaintComponent]
 Previously the stream painting of each Sprite was done in parallel, though this caused some jittering in the final view when running on Ryzen and ThreadRipper CPUs so it was omitted.
 \\
-The original idea with the render system was to delegate most processing to the GPU via OpenCL. Trying to implement this rendered most of the previous code unusable. Some half-cocked C-looking code reading like an error message later (example: void JI\_MatrixMul\_kernel\_basic(int dim, float[][] A, float[][] B){})  forced the realization that it would not be feasible with our current skill set. Furthermore even the most skillfully written CUDA code would not impactfully help render a 512*512 pixel grid.
+The original idea with the render system was to delegate most processing to the GPU via OpenCL. Trying to implement this rendered most of the previous code unusable. Some half-cocked C-looking code reading like an error message later (example: void JI\_MatrixMul\_kernel\_basic(int dim, float[][] A, float[][] B){}) forced the realization that it would not be feasible with our current skill set. Furthermore even the most skillfully written CUDA code would not impactfully help render a 512*512 pixel grid.
 \\ \\
 \textbf{Prefab system} \\%[Prefab system]
-ObjectPrefabs is a concept that yet again borrowed from the Unity game engine. 
+ObjectPrefabs is a concept that is yet again borrowed from the Unity game engine. 
 The alternative to this would be to copy a GameObject after it was constructed or manually implementing each object statically.The ObjectPrefab system is provided as a third option for anyone hoping to make any real progress this decade. In order to create an prefab simply extend the ObjectPrefab class implement the required methods as an simple example:
-	[Code for a Prefab]
-\\ \\
+[Code for a Prefab]
+\begin{lstlisting}[language = Java , frame = trBL , firstnumber = last , escapeinside={(*@}{@*)}]
+
+\end{lstlisting}
 In other words ObjectPrefabs operate on the notion that there are only so many meaningfully different ways that you can implement a 2D box. Not all objects are all unique, in fact most objects in games are not unique at all. Take for instance the this implementation of wall in Sokoban: 
-	[Wall prefab]
+[Wall prefab]
 \\ \\
 Since this framework does not have to be written in x86 assembly and fit on a box of punch cards totaling 2KB; each such non-unique object is constructed in much the same way but are stored as separate objects. Though the main purpose of the implementation of this system is to organize GameObject construction instructions speed up development time and.
 \\ \\
